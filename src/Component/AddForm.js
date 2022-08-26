@@ -3,30 +3,34 @@ import { Form, Input, Button, } from 'antd';
 import { useEffect, useState } from 'react';
 import { getDatafromLS } from './getDatafromLS';
 
-export const AddForm = () => {
+function AddForm() {
     // main array of objects state
-    const [users, setUsers] = useState(getDatafromLS())
+    const [users, setUsers] = useState(getDatafromLS());
     // input field state
-    const [name, setName] = useState('')
-    const [email, setEmail] = useState('')
-    const [description, setDescription] = useState('')
+
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [description, setDescription] = useState('');
     // add data
-    const handleAddUser = (e) => {
-        e.preventDefault()
+
+    const handleAddUser = () => {
+        // create object
+        const randomNumber = parseInt(Math.random() * 1000);
         let user = {
-            name,
-            email,
-            description,
+            id: randomNumber, /// đặt id = 1 số ngẫu nhiên để cho thao tác edit remove
+            name: name,
+            email: email,
+            description: description
         }
-        setUsers([...users, user])
-        setName('')
-        setEmail('')
-        setDescription('')
+        setUsers(pre => [...pre, user]);
+        setName('');
+        setEmail('');
+        setDescription('');
     }
     // saving data to local storage
     useEffect(() => {
-        localStorage.setItem('users', JSON.stringify(users))
-    }, [users])
+        localStorage.setItem('users', JSON.stringify(users));
+    }, [users]);
 
     return (
         <div className="container">
@@ -86,7 +90,7 @@ export const AddForm = () => {
                             className='btnAdd'
                             type="primary"
                             htmlType="submit"
-                            onClick={handleAddUser}
+                            onClick={() => handleAddUser()}
                         >Add to list</Button>
                         <Button className='btnCancel' htmlType="reset" >Cancel</Button>
                     </Form.Item>

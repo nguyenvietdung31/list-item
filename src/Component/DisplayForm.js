@@ -3,7 +3,7 @@ import { Button, List, Modal, Input } from 'antd';
 import { useEffect, useState } from 'react';
 import { getDatafromLS } from './getDatafromLS';
 
-function DisplayForm() {
+function DisplayForm() { // 
     // main array of objects state
     const [users, setUsers] = useState(getDatafromLS())
 
@@ -11,7 +11,7 @@ function DisplayForm() {
     const [isEditing, setIsEditing] = useState(false);
     const [editingUsers, setEditingUsers] = useState(null);
 
-    const onEditUsers = (users) => {
+    const handleEditUser = (users) => {
         setIsEditing(true);
         setEditingUsers({ ...users });
     };
@@ -21,9 +21,9 @@ function DisplayForm() {
     };
 
     // remove data
-    const handleRemoveUser = (name) => {
+    const handleRemoveUser = (id) => {
         const filteredUsers = users.filter((element,) => {
-            return element.name !== name
+            return element.id !== id
         })
         setUsers(filteredUsers)
     }
@@ -42,17 +42,17 @@ function DisplayForm() {
                         &emsp;
                         <Button className='btnRemoveAll' onClick={() => setUsers([])}>Remove All</Button>
                     </h2>
-                    <List
+                    <List className="list"
                         itemLayout="horizontal"
-                        dataSource={getDatafromLS()}
+                        dataSource={users}
                         renderItem={(users) => (
                             <List.Item>
                                 <List.Item.Meta
                                     title={`${users.name} X ${users.email}`}
                                     description={users.description}
                                 />
-                                <Button onClick={() => onEditUsers(users)}>Edit</Button>
-                                <Button onClick={() => handleRemoveUser(users.name)}>Remove</Button>
+                                <Button onClick={() => handleEditUser(users)}>Edit</Button>
+                                <Button onClick={() => handleRemoveUser(users.id)}>Remove</Button>
                             </List.Item>
                         )}
                     />
@@ -63,7 +63,7 @@ function DisplayForm() {
                         onOk={() => {
                             setUsers((pre) => {
                                 return pre.map((users) => {
-                                    if (users.name === editingUsers.name) {
+                                    if (users.id === editingUsers.id) {
                                         return editingUsers;
                                     } else {
                                         return users;

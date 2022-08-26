@@ -1,4 +1,5 @@
 import './App.css';
+import React from 'react';
 import AddForm from './Component/AddForm.js'
 import DisplayForm from './Component/DisplayForm'
 import { Col, Row } from 'antd';
