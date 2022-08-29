@@ -1,0 +1,5 @@
+đặt 1 biến trạng thái
+khi ấn submit -> check bên list
+
+gán biến count -> max
+đặt các điều kiện disable cho từng "thứ" khác nhau
