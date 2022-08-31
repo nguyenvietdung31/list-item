@@ -1,12 +1,9 @@
+import React from 'react';
 import 'antd/dist/antd.min.css';
 import { Button, List, Modal, Input } from 'antd';
-import { useEffect, useState } from 'react';
-import { getDatafromLS } from './getDatafromLS';
+import { useState } from 'react';
 
-function DisplayForm() { // 
-    // main array of objects state
-    const [users, setUsers] = useState(getDatafromLS())
-
+export const DisplayForm = ({ users, setUsers }) => {
     // edit data
     const [isEditing, setIsEditing] = useState(false);
     const [editingUsers, setEditingUsers] = useState(null);
@@ -26,11 +23,6 @@ function DisplayForm() { //
         })
         setUsers(filteredUsers)
     }
-    // saving data to local storage
-    useEffect(() => {
-        localStorage.setItem('users', JSON.stringify(users))
-    }, [users])
-
     return (
         <div className="container">
             {/* display , edit and remove user */}
@@ -75,6 +67,7 @@ function DisplayForm() { //
                         }}
                     >
                         <Input
+                            maxLength={20}
                             value={editingUsers?.name}
                             onChange={(e) => {
                                 setEditingUsers((pre) => {
@@ -90,7 +83,9 @@ function DisplayForm() { //
                                 });
                             }}
                         />
-                        <Input
+                        <Input.TextArea
+                            maxLength={256}
+                            rows={4}
                             value={editingUsers?.description}
                             onChange={(e) => {
                                 setEditingUsers((pre) => {

@@ -1,13 +1,9 @@
+import React from 'react';
 import 'antd/dist/antd.min.css';
-import { Form, Input, Button, } from 'antd';
-import { useEffect, useState } from 'react';
-import { getDatafromLS } from './getDatafromLS';
+import { Form, Input, Button, Modal } from 'antd';
+import { useState } from 'react';
 
-function AddForm() {
-    // main array of objects state
-    const [users, setUsers] = useState(getDatafromLS());
-    //
-    const Max_item = 15
+export const AddForm = ({ users, setUsers }) => {
     const [form] = Form.useForm();
     // input field state
     const [name, setName] = useState("");
@@ -24,35 +20,29 @@ function AddForm() {
             email: email,
             description: description
         }
-        setUsers((pre) => {
-            return [...pre, user]
-        })
+        setUsers(user);
         setName("");
         setEmail("");
         setDescription("");
         form.resetFields();
+        setIsConfirmClick(false)
     }
-    const { confirm } = Modal;
-
-    const showConfirm = () => {
-        confirm({
-            title: 'Đã tạo tối đa item, bạn có muốn tiếp tục tạo mới item hay không?',
-            okText: 'Confirm',
-            onOk() {
-
-            },
-
-            onCancel() {
-            },
-        });
+    //check data when user length = max item
+    const Max_item = 15
+    const [visible, setVisible] = useState(false);
+    const [isConfirmClick, setIsConfirmClick] = useState(false)
+    const showModal = () => {
+        setVisible(true);
     };
 
+    const handleConfirm = () => {
+        setIsConfirmClick(true);
+        setVisible(false);
+    };
 
-    // saving data to local storage
-    useEffect(() => {
-        localStorage.setItem('users', JSON.stringify(users));
-    }, [users]);
-
+    const handleCancel = () => {
+        setVisible(false);
+    };
     return (
         <div className="container">
             {/* Add a new user */}
@@ -75,7 +65,7 @@ function AddForm() {
                             maxLength={20}
                             onChange={(e) => setName(e.target.value)}
                             value={name}
-                            disabled={users.length === Max_item}>
+                            disabled={users.length >= Max_item && !isConfirmClick}>
                         </Input>
                     </Form.Item>
                     <Form.Item
@@ -87,7 +77,7 @@ function AddForm() {
                             rows={4}
                             onChange={(e) => setDescription(e.target.value)}
                             value={description}
-                            disabled={users.length === Max_item}>
+                            disabled={users.length >= Max_item && !isConfirmClick}>
                         </Input.TextArea>
                     </Form.Item>
                     <Form.Item
@@ -107,7 +97,7 @@ function AddForm() {
                             placeholder='type email'
                             onChange={(e) => setEmail(e.target.value)}
                             value={email}
-                            disabled={users.length === Max_item}>
+                            disabled={users.length >= Max_item && !isConfirmClick}>
                         </Input>
                     </Form.Item>
                     <Form.Item>
@@ -115,17 +105,26 @@ function AddForm() {
                             className='btnAdd'
                             type="primary"
                             htmlType="submit"
-                            // onClick={() => handleAddUser()}
                             onClick={handleAddUser}
-                            disabled={users.length === Max_item}
+                            disabled={users.length >= Max_item && !isConfirmClick}
                         >Add to list</Button>
                         <Button
                             className='btnCancel'
-                            onClick={showConfirm}
+                            onClick={showModal}
                         >Cancel</Button>
                     </Form.Item>
                 </Form>
             </div>
+
+            {/* Modal cảnh báo khi max item*/}
+            <Modal
+                title="Warning"
+                visible={visible}
+                okText="Confirm"
+                onOk={handleConfirm}
+                onCancel={handleCancel}
+            ><p>Đã tạo tối đa item, bạn có muốn tiếp tục tạo mới item hay không?</p>
+            </Modal>
         </div>
     )
 }
