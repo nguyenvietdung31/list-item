@@ -12,19 +12,20 @@ function App() {
   useEffect(() => {
     localStorage.setItem('users', JSON.stringify(users))
   }, [users])
-
+  //
   const handleSetUser = (user) => {
     setUsers([...users, user])
   }
-
+  //
   const handleResetUser = (users) => {
     setUsers(users)
   }
+
   return (
     <div className="App">
       <Row gutter={[24, 32]}>
-        <Col span={12}><DisplayForm users={users} setUsers={handleResetUser} /></Col>
-        <Col span={12}><AddForm users={users} setUsers={handleSetUser} /></Col>
+        <Col span={12}><DisplayForm users={users} setUsers={handleResetUser}/></Col>
+        <Col span={12}><AddForm users={users} setUsers={handleSetUser}/></Col>
       </Row>
     </div>
   );

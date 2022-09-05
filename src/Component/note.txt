@@ -1,2 +1,0 @@
-gán biến count -> max
-đặt các điều kiện disable cho từng "thứ" khác nhau

@@ -12,10 +12,12 @@ export const AddForm = ({ users, setUsers }) => {
     // add data
     const handleAddUser = (event) => {
         event.preventDefault();
+        // console.log(form.getFieldsError())
+        if (form.getFieldsError().map(el => el.errors).some(el => el.length > 0)) return;
         // create object
         const randomNumber = parseInt(Math.random() * 1000);
         const user = {
-            id: randomNumber, /// đặt id = 1 số ngẫu nhiên để cho thao tác edit remove
+            id: randomNumber, /// set id with a random number
             name: name,
             email: email,
             description: description
@@ -24,7 +26,7 @@ export const AddForm = ({ users, setUsers }) => {
         setName("");
         setEmail("");
         setDescription("");
-        form.resetFields();
+        form.resetFields(); // reset input after click add button
         setIsConfirmClick(false)
     }
     //check data when user length = max item
@@ -34,20 +36,19 @@ export const AddForm = ({ users, setUsers }) => {
     const showModal = () => {
         setVisible(true);
     };
-
     const handleConfirm = () => {
         setIsConfirmClick(true);
         setVisible(false);
     };
-
     const handleCancel = () => {
         setVisible(false);
     };
+
     return (
         <div className="container">
             {/* Add a new user */}
-            <h1>Add New Item</h1>
             <div className="add-form">
+                <h1>Add New Item</h1>
                 <Form
                     layout='vertical'
                     autoComplete='off'
@@ -116,7 +117,7 @@ export const AddForm = ({ users, setUsers }) => {
                 </Form>
             </div>
 
-            {/* Modal cảnh báo khi max item*/}
+            {/* Warning modal when user length = max item*/}
             <Modal
                 title="Warning"
                 visible={visible}

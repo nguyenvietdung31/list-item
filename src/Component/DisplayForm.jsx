@@ -7,7 +7,6 @@ export const DisplayForm = ({ users, setUsers }) => {
     // edit data
     const [isEditing, setIsEditing] = useState(false);
     const [editingUsers, setEditingUsers] = useState(null);
-
     const handleEditUser = (users) => {
         setIsEditing(true);
         setEditingUsers({ ...users });
@@ -23,6 +22,7 @@ export const DisplayForm = ({ users, setUsers }) => {
         })
         setUsers(filteredUsers)
     }
+
     return (
         <div className="container">
             {/* display , edit and remove user */}
