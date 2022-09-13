@@ -1,10 +1,11 @@
 import './App.css';
-import React, { useState, useEffect } from 'react';
+import 'antd/dist/antd.min.css';
+import React from 'react'
+import { useState, useEffect } from 'react';
 import AddForm from './Component/AddForm.jsx'
 import DisplayForm from './Component/DisplayForm.jsx'
-import { Col, Row } from 'antd';
-import 'antd/dist/antd.min.css';
 import { getDatafromLS } from './Component/getDatafromLS';
+import { Col, Row } from 'antd';
 function App() {
   // main array of objects state
   const [users, setUsers] = useState(getDatafromLS())
@@ -12,11 +13,10 @@ function App() {
   useEffect(() => {
     localStorage.setItem('users', JSON.stringify(users))
   }, [users])
-  //
+  // update and display data to DOM after submit
   const handleSetUser = (user) => {
     setUsers([...users, user])
   }
-  //
   const handleResetUser = (users) => {
     setUsers(users)
   }

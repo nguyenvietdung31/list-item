@@ -10,10 +10,10 @@ export const AddForm = ({ users, setUsers }) => {
     const [email, setEmail] = useState("");
     const [description, setDescription] = useState("");
     // add data
-    const handleAddUser = (event) => {
-        event.preventDefault();
+    const handleAddUser = () => {
+        // event.preventDefault();
         // console.log(form.getFieldsError())
-        if (form.getFieldsError().map(el => el.errors).some(el => el.length > 0)) return;
+        // if (form.getFieldsError().map(el => el.errors).some(el => el.length > 0)) return;
         // create object
         const randomNumber = parseInt(Math.random() * 1000);
         const user = {
@@ -23,16 +23,16 @@ export const AddForm = ({ users, setUsers }) => {
             description: description
         }
         setUsers(user);
-        setName("");
-        setEmail("");
-        setDescription("");
+        // setName("");
+        // setEmail("");
+        // setDescription("");
         form.resetFields(); // reset input after click add button
-        setIsConfirmClick(false)
+        setIsConfirmClick(false);
     }
     //check data when user length = max item
-    const Max_item = 15
+    const Max_item = 15;
     const [visible, setVisible] = useState(false);
-    const [isConfirmClick, setIsConfirmClick] = useState(false)
+    const [isConfirmClick, setIsConfirmClick] = useState(false);
     const showModal = () => {
         setVisible(true);
     };
@@ -53,6 +53,7 @@ export const AddForm = ({ users, setUsers }) => {
                     layout='vertical'
                     autoComplete='off'
                     form={form}
+                    onFinish={handleAddUser}
                 >
                     <Form.Item
                         label="Name"
@@ -106,9 +107,11 @@ export const AddForm = ({ users, setUsers }) => {
                             className='btnAdd'
                             type="primary"
                             htmlType="submit"
-                            onClick={handleAddUser}
+                            // onClick={handleAddUser}
                             disabled={users.length >= Max_item && !isConfirmClick}
                         >Add to list</Button>
+                        &emsp; {/* tab character */}
+                        &emsp; {/* tab character */}
                         <Button
                             className='btnCancel'
                             onClick={showModal}

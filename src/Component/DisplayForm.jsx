@@ -17,22 +17,23 @@ export const DisplayForm = ({ users, setUsers }) => {
     };
     // remove data
     const handleRemoveUser = (id) => {
-        const filteredUsers = users.filter((element,) => {
-            return element.id !== id
+        const filteredUsers = users.filter((value) => {
+            return value.id !== id;
         })
-        setUsers(filteredUsers)
-    }
+        setUsers(filteredUsers);
+    };
 
     return (
         <div className="container">
             {/* display , edit and remove user */}
             <div className="display-form">
                 {users.length > 0 && <>
-                    <h2>{users.length} items
-                        &emsp;
-                        <Button className='btnRemoveAll' onClick={() => setUsers([])}>Remove All</Button>
-                    </h2>
-                    <List className="list"
+                    <h1>{users.length} items
+                        &emsp; {/* tab character */}
+                        <Button className="btnRemoveAll" onClick={() => setUsers([])}>Remove All</Button>
+                    </h1>
+                    <List
+                        className="list"
                         itemLayout="horizontal"
                         dataSource={users}
                         renderItem={(users) => (
@@ -67,6 +68,8 @@ export const DisplayForm = ({ users, setUsers }) => {
                         }}
                     >
                         <Input
+                            addonBefore="Name"
+                            placeholder='type name'
                             maxLength={20}
                             value={editingUsers?.name}
                             onChange={(e) => {
@@ -76,6 +79,8 @@ export const DisplayForm = ({ users, setUsers }) => {
                             }}
                         />
                         <Input
+                            addonBefore="Email"
+                            placeholder='type email'
                             value={editingUsers?.email}
                             onChange={(e) => {
                                 setEditingUsers((pre) => {
@@ -84,6 +89,7 @@ export const DisplayForm = ({ users, setUsers }) => {
                             }}
                         />
                         <Input.TextArea
+                            placeholder='type description'
                             maxLength={256}
                             rows={4}
                             value={editingUsers?.description}
