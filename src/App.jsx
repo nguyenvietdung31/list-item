@@ -23,6 +23,7 @@ function App() {
 
   return (
     <div className="App">
+      <h1>A list-item ReactJS app with Ant Design</h1>
       <Row gutter={[24, 32]}>
         <Col span={12}><DisplayForm users={users} setUsers={handleResetUser}/></Col>
         <Col span={12}><AddForm users={users} setUsers={handleSetUser}/></Col>
